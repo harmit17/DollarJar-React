@@ -1,44 +1,35 @@
 import React, { Component } from "react";
 import DollarJar from "./DollarJar";
+import {BrowserRouter as Router, Switch, Route, Redirect, Link} from 'react-router-dom';
 
 class HomePage extends Component {
 
-    state = {
-        name: "",
-        redirect: false
-    }
+    constructor(props){
 
-    name = (e) => {
+         super(props);
+         this.state = {username: ''};
+     }
+
+    handleInput = (e) =>{
+
         e.preventDefault();
-        const name = e.target.elements.name.value;
-        console.log(name);
-        this.setState({
-            name: name,
-            redirect: true
-        })
-
+        const name = e.target.value;
+        this.setState({ name: name });
     }
 
     render() {
-        return (
-            <div>
-                {this.state.redirect ?
-                    <DollarJar name={this.state.name}/> :
-                    <div>
-                        <h1> Welcome</h1>
-                        <div>
-                            <form onSubmit={this.name}>
-                                <input type="text" placeholder="Enter Your Name" name="name" />
-                                <br />
-                                <button name="enter" type="submit">Submit</button>
-                            </form>
-                        </div>
-                    </div>
-                }
 
-            </div>
-        );
-    }
+            return(
+
+                <div>
+                    <input type="text" placeholder="Enter Your Name" name="username" value={this.state.name} onChange={this.handleInput}/>
+                    <br />
+                    <Link to={{pathname:'/DollarJar', name:this.state.name}}>
+                    <button name="enter" type="submit">Submit</button>
+                    </Link>
+                </div>
+            )
+        }
 }
 
 export default HomePage;

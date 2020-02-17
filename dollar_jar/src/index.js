@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
+import HomePage from './HomePage';
+import DollarJar from './DollarJar';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

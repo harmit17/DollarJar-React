@@ -1,16 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import HomePage from './HomePage';
-import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router';
-
-
+import DollarJar from './DollarJar';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+//Route - render out the component based on the url
+//every thing between <Router> can use the ability to use routing
 function App() {
 
   return (
-    <div>
-      <HomePage />
-    </div>
+    
+      <Router>
+        <div>
+          <nav>
+              {/* <Link to="/">Home</Link> */}
+              <br/>              
+              {/* <Link to="/DollarJar">DollarJar</Link> */}
+          </nav>
+          <Route path="/" component={HomePage} exact/>
+          <Route path="/DollarJar" component={DollarJar} />
+        </div>
+      </Router>
   );
 }
 

@@ -3,23 +3,16 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 class DollarJar extends Component {
 
-    // state = {
-    //     namesList:[],
-    //     amount:10
-    // }
-
     constructor(props){
 
         super(props);
-        this.state = {username: []};
+        this.state = {username:'',
+            nameList : [],
+            amount:10
+        };
     }
 
-    // addPerson = (e) =>{
-    //     e.preventDefault();
-    //     const name = e.target.value;
-    //     console.log(name);
-    // }
-
+    // Handler Function for User Name
     handleName =(e) =>{
 
         e.preventDefault();
@@ -31,21 +24,16 @@ class DollarJar extends Component {
         console.log(name)
     }
 
-    handleList(){
+    //Handler Function for adding Users to array
+    handleList =(e)=>{
 
+        e.preventDefault();
+        let newPerson = this.state.username;
+        this.setState({
 
-        // let nameLists = this.target.value;
-        // this.setState({
-
-        //     username : [...this.state.username,nameLists]
-        // })
-        // nameLists.push(list);
-        // let name=   list;
-        // this.setState({
-
-        //     nameLists : nameLists
-        // })
-        console.log(this.state.namesLists);
+            nameList : [...this.state.nameList, newPerson]
+        })
+        console.log(this.state.nameList);
     }
 
     addValue = () =>{
@@ -74,11 +62,18 @@ class DollarJar extends Component {
                         <button name="enter" type="submit" onClick={this.handleList}>Add User</button>        
                        
                         <div>
+                                {/* {(this.state.nameList)}
+                                <button name="minus" type="submit" onClick={this.subtractValue}>-</button>
+                                {this.state.amount} 
+                                <button name="plus" type="submit" onClick={this.addValue}>+</button> */}
+                                <ul>
+                                 {this.state.nameList.map( (val)=> 
 
-                            <button name="minus" type="submit" onClick={this.subtractValue}>-</button>
-                            {this.state.amount} 
-                            <button name="plus" type="submit" onClick={this.addValue}>+</button>
-                         </div>
+                                    <li>{val}<span><button name="minus" type="submit" onClick={this.subtractValue}>-</button></span>
+                                 {this.state.amount}<span><button name="plus" type="submit" onClick={this.addValue}>+</button></span></li>)}
+                                </ul>
+                            </div>
+
                    </div>
                 </div>
         );

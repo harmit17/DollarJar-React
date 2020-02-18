@@ -6,9 +6,16 @@ class DollarJar extends Component {
     constructor(props){
 
         super(props);
-        this.state = {username:'',
+        this.state = {
+            username:{
+
+                        name: '',
+                        id: '',
+                        dueAmount: 0
+                },   
             nameList : [],
-            amount:10
+            amount:10,
+            totalAmount : 0
         };
     }
 
@@ -16,41 +23,48 @@ class DollarJar extends Component {
     handleName =(e) =>{
 
         e.preventDefault();
-        const name = e.target.value;
+        let name = e.target.value;
+        let id = this.state.nameList.length + 1;
         this.setState({
 
-            username : name            
+            username :{
+                name : name,
+                id : id,
+                dueAmount :0
+            }            
         })
         console.log(name)
     }
 
     //Handler Function for adding Users to array
-    handleList =(e)=>{
-
-        e.preventDefault();
+    handleList =()=>{
+        
         let newPerson = this.state.username;
         this.setState({
 
-            nameList : [...this.state.nameList, newPerson]
+            nameList : [...this.state.nameList,newPerson]
         })
-        console.log(this.state.nameList);
-    }
+        //console.log(this.state.nameList); 
+    };
 
-    addValue = () =>{
+    addValue(e){
 
-         this.setState({
+           
+           e.dueAmount += this.state.amount 
+            this.setState({
 
-                 amount: parseInt(this.state.amount) + parseInt(this.state.amount)
-         })
-     }
+                    totalAmount: this.state.totalAmount +  this.state.amount
+            })
+     };
 
-    subtractValue = () =>{
+    subtractValue(e){
 
+        e.dueAmount -= this.state.amount 
         this.setState({
 
-                amount: parseInt(this.state.amount) - parseInt(this.state.amount)
+                totalAmount: this.state.totalAmount -  this.state.amount
         })
-    }
+    };   
 
     render() {
         return (
@@ -58,20 +72,36 @@ class DollarJar extends Component {
                 <div>
                     <h3>{this.props.location.name}</h3>
                    <div>   
-                        <input type="text" placeholder="Enter Your Name" name="username" value={this.state.namesLists} onChange={this.handleName}/>       
-                        <button name="enter" type="submit" onClick={this.handleList}>Add User</button>        
-                       
+                            <input type="text" placeholder="Enter Your Name" name="username" value={this.state.username.name} onChange={this.handleName}/>       
+                            <button name="enter" type="submit" onClick={this.handleList}>Add User</button>        
                         <div>
                                 {/* {(this.state.nameList)}
                                 <button name="minus" type="submit" onClick={this.subtractValue}>-</button>
                                 {this.state.amount} 
                                 <button name="plus" type="submit" onClick={this.addValue}>+</button> */}
-                                <ul>
-                                 {this.state.nameList.map( (val)=> 
+                                {/* <ul>
+                                    {this.state.nameList.map( (val)=> 
+                                    <li>{val}<button name="minus" type="submit" onClick={this.subtractValue}>-</button>
+                                    {this.state.username.dueAmount}
+                                    <button name="plus" type="submit" onClick={this.addValue}>+</button></li>)}
+                                    <br/>
+                                    {this.state.totalAmount}
+                                </ul>  */}
+                                <h3>Total = {this.state.totalAmount}</h3>
+                                {
+                                    this.state.nameList.map((user)=>{
 
-                                    <li>{val}<span><button name="minus" type="submit" onClick={this.subtractValue}>-</button></span>
-                                 {this.state.amount}<span><button name="plus" type="submit" onClick={this.addValue}>+</button></span></li>)}
-                                </ul>
+                                        return <div key={user.id}>
+                                            <ul>
+                                                <li>{user.name}
+                                                <button type="button" onClick={()=> this.addValue(user)}>+</button>
+                                                {user.dueAmount}
+                                                <button type="button" onClick={()=>this.subtractValue(user)}>-</button>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    })
+                                }
                             </div>
 
                    </div>
